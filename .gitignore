@@ -1,0 +1,4 @@
+.django_architecture
+.idea
+*.sqlite3
+*.pyc
