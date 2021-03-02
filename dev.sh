@@ -46,7 +46,7 @@ rebuild_virtualenv() {
     CD=$(pwd)
     cd "$PROJ_BASE"
 
-    source "$PROJ_BASE/$VENV_BASE/bin/deactivate"
+    deactivate
     rm -rf "$VENV_BASE"
 
     pyenv install --skip-existing
@@ -54,7 +54,7 @@ rebuild_virtualenv() {
     python -m venv "$VENV_BASE"
     source  "$PROJ_BASE/$VENV_BASE/bin/activate"
 
-    pip install --upgrade pip==21.0.1 setuptools==53.0.0
+    pip install --upgrade pip==21.0.1 setuptools==54.0.0
     pip install -r requirements.txt
 
     cd $CD

@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Thirdy Party
+    'drf_yasg',
+
+    # First Party
+    'board_manager.djangoapps.core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +129,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DEFAULT_AUTHENTICATION_CLASSES = "Add token auth here later"
