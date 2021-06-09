@@ -37,10 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # Thirdy Party
     'drf_yasg',
-
     # First Party
     'board_manager.djangoapps.core.apps.CoreConfig',
 ]

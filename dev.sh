@@ -57,7 +57,23 @@ rebuild_virtualenv() {
     pip install --upgrade pip==21.1.2 setuptools==57.0.0
     pip install -r requirements.txt
 
+    _copy_git_hooks
+
     cd $CD
+}
+
+run_hooks() {
+    echo_green "Running hooks..."
+    CD=$(pwd)
+    cd "$PROJ_BASE"
+    pre-commit run --all-files
+    exitcode=$?
+    cd $CD
+    return $exitcode
+}
+
+_copy_git_hooks() {
+    pre-commit install -f --hook-type commit-msg --hook-type prepare-commit-msg --hook-type pre-commit --hook-type pre-push
 }
 
 _create_git_aliases
@@ -76,8 +92,8 @@ devhelp
 
 if test -f "$PROJ_BASE/$VENV_BASE/bin/activate"; then
     source "$PROJ_BASE/$VENV_BASE/bin/activate"
+    _copy_git_hooks
 else
     echo_red "No virtualenv found!"
     echo_green "Run: rebuild_virtualenv"
 fi
-

@@ -6,3 +6,4 @@ drf_yasg==1.20.0
 djangorestframework-dataclasses==0.9
 # git+ssh://git@github.com/oxan/djangorestframework-dataclasses.git#egg=djangorestframework-dataclasses
 djangorestframework-camel-case==1.2.0
+pre-commit==2.13.0

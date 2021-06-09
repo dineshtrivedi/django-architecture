@@ -14,14 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 SchemaViewClass = get_schema_view(
-    openapi.Info(title="Django Architecture API", default_version='v1', description="The Django Architecture API",),
+    openapi.Info(
+        title="Django Architecture API",
+        default_version='v1',
+        description="The Django Architecture API",
+    ),
     authentication_classes=(SessionAuthentication,),
     permission_classes=(IsAuthenticated,),
 )

@@ -37,5 +37,5 @@ I have chosen djangorestframework-dataclasses with pure dataclass and swagger vi
 1- apisec + marshmallow + marshmallow-dataclass + swagger-ui.
 Apisec seemed to be too much work, and I would still need to add the swagger-ui to the project, maybe this is a cool project for future
 
-2- django-rest-marshmallow + marshmallow + marshmallow-dataclass + drf_yasg 
+2- django-rest-marshmallow + marshmallow + marshmallow-dataclass + drf_yasg
 Problems with having two meta classes in the inheritance, maybe I can fix it or right a documentation of my attempt another time

@@ -1,0 +1,31 @@
+default_language_version:
+  python: python3.9
+default_stages: [commit]
+repos:
+  -   repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.0.1
+      hooks:
+        -   id: check-yaml
+            # Instead of loading the files, simply parse them for syntax.
+            # A syntax-only check enables extensions and unsafe constructs which would otherwise be forbidden.
+            # Using this option removes all guarantees of portability to other yaml implementations.
+            args: ['--unsafe']
+        -   id: end-of-file-fixer
+            stages: [commit]
+        -   id: trailing-whitespace
+            exclude: '.bumpversion.cfg'
+            stages: [commit]
+  -   repo: https://github.com/psf/black
+      rev: 21.5b2
+      hooks:
+        -   id: black
+            # Keeping compatibility with our current code style for line-length and no single quotes to double quotes
+            args: ["--line-length=120", "--skip-string-normalization"]
+  -   repo: https://github.com/PyCQA/isort
+      rev: 5.8.0
+      hooks:
+        -   id: isort
+  -   repo: https://github.com/PyCQA/flake8
+      rev: 3.9.2
+      hooks:
+        -   id: flake8
