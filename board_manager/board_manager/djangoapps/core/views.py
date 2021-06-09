@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from djangorestframework_camel_case.parser import CamelCaseJSONParser
 from djangorestframework_camel_case.render import CamelCaseJSONRenderer
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework_dataclasses.serializers import DataclassSerializer
 
@@ -30,8 +31,7 @@ class HelloWorld:
     # FIXME: This should be required still in the serializer object but with allow_null=True
     height_only_optional: Optional[float]
 
-    # float = None - Required in the payload and swagger, so the default value does not make difference
-    # Add has_default_value to TypeInfo and make the field required=False if it has default value
+    # float = None - Required in the payload and swagger, so the default value does not make any difference
     # FIXME: Should we make required as False when the dataclass has default value?
     height_none_default: float = None
 
@@ -40,8 +40,9 @@ class HelloWorld:
     height_option_and_none_default: Optional[float] = None
 
     # FIXME: Should the rule be?
-    # Optional is always allow_null (and required=True), but it is required=False only if there is default value
+    # Optional is always allow_null=True (and required=True), but it is required=False only if there is default value
     # Require=False is not set in any other case, but with default value
+    # Add has_default_value to TypeInfo and make the field required=False if it has default value
     # Why?
     # required=False seems to be complicated on the dataclass since in the serializer it means the data won't necessary be there
     # but for the dataclass to be instantiated successfully the data needs to be there unless it has default value
@@ -79,11 +80,14 @@ class HelloWorldViewDataclass(APIView):
 # Will have value of <class 'rest_framework.fields.empty'>
 # the correct value would be to be None when id is not provided
 
+
 @dataclass
 class HelloWorldManyExample:
     name: str
     mobile_number: str
-    id: Optional[int] = None
+    id_only_optional: Optional[int]
+    id_only_default: int = None
+    id_default_and_optional: Optional[int] = None
 
 
 class HelloWorldManyInput(DataclassSerializer):
@@ -100,3 +104,12 @@ class HelloWorldManyViewDataclass(APIView):
         hello_world_many_data = HelloWorldManyInput(data=request.data, many=True)
         hello_world_many_data.is_valid(raise_exception=True)
         return JsonResponse({"received": [asdict(data) for data in hello_world_many_data.validated_data]})
+
+
+@swagger_auto_schema(method='post', request_body=HelloWorldManyInput(many=True))
+@api_view(['POST'])
+def many_api_view(request):
+    hello_world_many_data = HelloWorldManyInput(data=request.data, many=True)
+    hello_world_many_data.is_valid(raise_exception=True)
+    return JsonResponse({"received": [asdict(data) for data in hello_world_many_data.validated_data]})
+

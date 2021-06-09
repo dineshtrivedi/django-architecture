@@ -49,12 +49,12 @@ rebuild_virtualenv() {
     deactivate
     rm -rf "$VENV_BASE"
 
-    pyenv install --skip-existing
+    pyenv install `cat .python-version` --skip-existing
 
     python -m venv "$VENV_BASE"
     source  "$PROJ_BASE/$VENV_BASE/bin/activate"
 
-    pip install --upgrade pip==21.0.1 setuptools==54.0.0
+    pip install --upgrade pip==21.1.2 setuptools==57.0.0
     pip install -r requirements.txt
 
     cd $CD
@@ -66,7 +66,7 @@ _create_git_aliases
 PYTHON_VERSION=`cat ./.python-version`
 echo_green "Installing python version: ${PYTHON_VERSION}\n"
 
-pyenv install --skip-existing | exit 0
+pyenv install `cat .python-version` --skip-existing | exit 0
 
 echo_green "Welcome to django_architecture's dev env"
 echo_green "Hint: autocomplete works for the commands below ;)"
